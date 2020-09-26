@@ -30,6 +30,37 @@ class MemberList(APIView):
             return HttpResponse(serializer.data, status=status.HTTP_201_CREATED)
         return HttpResponse(serializer.error, status=status.HTTP_400_BAD_REQUEST)
 
+class MemberDetail(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Member.objects.get(pk=pk)
+        except Member.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, pk, format=None):
+        memberobject = self.get_object(pk)
+        serializers = MemberSerializer(memberobject)
+        return HttpResponse(serializers.data)
+    
+    def put(self, request, pk, format=None):
+        # TODO - Fix this. update not working
+        memberobject = self.get_object(pk)
+        serializer = MemberSerializer(memberobject, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse(serializer.data)
+        return HttpResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, request, pk, format=None):
+        memberobject = self.get_object(pk)
+        memberobject.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
 # class MemberList(ListView):
 #     model = Member
 
