@@ -9,12 +9,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-
-# Create your views here.
-
-def index(request):
-    return HttpResponse("index url")
-
 class MemberList(APIView):
 
     def get(self, request, format=None):
@@ -24,7 +18,6 @@ class MemberList(APIView):
 
     def post(self, request, format=None):
         serializer = MemberSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return HttpResponse(serializer.data, status=status.HTTP_201_CREATED)
@@ -44,7 +37,6 @@ class MemberDetail(APIView):
         return HttpResponse(serializers.data)
     
     def put(self, request, pk, format=None):
-        # TODO - Fix this. update not working
         memberobject = self.get_object(pk)
         serializer = MemberSerializer(memberobject, data=request.data)
         if serializer.is_valid():
@@ -57,18 +49,3 @@ class MemberDetail(APIView):
         memberobject = self.get_object(pk)
         memberobject.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-# class MemberList(ListView):
-#     model = Member
-
-# class MemberDetail(DetailView):
-#     model = Member
-
-# class MemberUpdate(UpdateView):
-#     model = Member
-
-# class MemberDelete(DeleteView):
-#     model = Member
