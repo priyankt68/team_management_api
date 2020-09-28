@@ -1,2 +1,23 @@
-# team_management_api
-API to create, read, update and delete team members.
+### Setup of the project
+
+Create a virtual environment
+```
+python3 -m venv venv
+```
+
+
+Create a virtual environment
+```
+source venv/bin/activate
+```
+
+# Install dependencies
+```
+pip3 install -r requirements.txt
+```
+
+# Setup database
+
+```
+
+```
