@@ -17,11 +17,13 @@ class MemberList(APIView):
         return HttpResponse(serializer.data)
 
     def post(self, request, format=None):
+        print(request.data)
         serializer = MemberSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return HttpResponse(serializer.data, status=status.HTTP_201_CREATED)
-        return HttpResponse(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+        print(serializer.errors)
+        return HttpResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MemberDetail(APIView):
 

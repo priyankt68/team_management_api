@@ -2,12 +2,19 @@ from rest_framework import serializers
 from .models import Member
 
 class MemberSerializer(serializers.ModelSerializer):
+    firstName = serializers.CharField(source='first_name')
+    lastName = serializers.CharField(source='last_name')
+    phone = serializers.IntegerField(source='phone_number')
+    role = serializers.CharField()
+    userId = serializers.IntegerField(source='id', required=False)
+
 
     class Meta:
         model = Member
-        fields = ['id', 'first_name', 'last_name', 'phone_number', 'role']
-
+        fields = ['userId', 'firstName', 'lastName', 'phone', 'role']
+        read_only_fields = ['userId']
     def create(self, validated_data):
+        print(validated_data)
         return Member.objects.create(**validated_data)
     
     def update(self, instance, validated_data):
