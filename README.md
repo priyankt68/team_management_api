@@ -20,9 +20,28 @@ Ensure that you have a docker daemon running on your system.
 docker-compose up --build -d 
 ```
 
+### Setup the dev environment
+
+The environment variables is present `sample.env.dev`.  Create a new dev envrionment file `.env.dev`.
+```
+cp sample.env.dev env.dev
+```
+
+We can update following variables for PostgreSQL password, user and port.
+```
+SQL_ENGINE=django.db.backends.postgresql
+SQL_DATABASE=teams_api_db
+SQL_USER=teams_api_user
+SQL_PASSWORD=some_password
+SQL_HOST=db
+SQL_PORT=some_non_standard_port_like_5432
+```
+
+
+
 ### Run the containers
 ```
-docker-compose up teans_api
+docker-compose up teams_api
 ```
 You can run `docker ps` to find two containers running. One for teams_api and other for database - Postgresql.
 
@@ -41,6 +60,13 @@ docker exec -it team_management_api_teams_api_1 sh
 /usr/src/app # python manage.py makemigrations teams
 /usr/src/app # python manage.py migrate
 ```
+
+### Creating superusers for Django Admin
+```
+docker exec -it team_management_api_teams_api_1 sh
+/usr/src/app # python manage.py createsuperuser
+```
+
 
 ## Testing APIs
 
